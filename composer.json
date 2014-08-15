@@ -1,7 +1,8 @@
 {
     "name": "bobkingstone/pedlar-cart",
-    "description": "Drop in shopping cart for laravel ecommerce sites",
+    "description": "A simple drop in shopping cart for laravel ecommerce sites",
     "keywords": ["Laravel","ecommerce","shopping cart"],
+    "License": "MIT",
     "authors": [
         {
             "name": "Bob Kingstone",
