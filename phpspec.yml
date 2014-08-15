@@ -1,0 +1,5 @@
+formatter.name: dot
+suites:
+  PedlarCart_suite:
+    src_path: src
+    spec_path: tests
