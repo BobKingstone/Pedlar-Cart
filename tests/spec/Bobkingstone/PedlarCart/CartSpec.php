@@ -103,32 +103,11 @@ class CartSpec extends ObjectBehavior
         $this->all()->shouldHaveCount(0);
     }
 
-    function it_updates_an_items_quantities()
+    function it_should_return_a_total_number_of_unique_items_in_cart(SessionStorage $storage, CartItem $item1, CartItem $item2)
     {
-        $this->insert($this->cartItemComplete);
-
-        $this->insert($this->cartItemComplete);
-
-        $this->all()->shouldHaveCount(1);
-    }
-
-    function it_should_return_a_total_number_of_unique_items_in_cart()
-    {
-        $this->insert($this->cartItemComplete);
-
-        $this->insert($this->cartItem2);
+        $storage->getAll()->willReturn([$item1,$item2]);
 
         $this->TotalUnqiueItems()->shouldReturn(2);
-    }
-
-    function it_should_get_total_number_of_all_items_in_cart()
-    {
-        $this->insert($this->cartItemComplete);
-
-        $this->insert($this->cartItem2);
-
-        $this->totalItems()->shouldReturn(3);
-
     }
 
     function it_should_throw_exception_if_a_required_param_is_missing()

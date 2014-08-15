@@ -68,8 +68,7 @@ class Cart
 
         if ( $this->has($identifier) )
         {
-            $existing = $this->find($identifier);
-            $existing->qty += $data['qty'];
+            $this->updateQty($data, $identifier);
 
             return $identifier;
         }
@@ -128,6 +127,8 @@ class Cart
     }
 
     /**
+     * calculates total value of all products in cart
+     *
      * @return int
      */
     public function total()
@@ -169,7 +170,7 @@ class Cart
      */
     public function TotalUnqiueItems()
     {
-        return count($this->cart);
+        return count($this->all());
     }
 
     /**
@@ -177,14 +178,14 @@ class Cart
      */
     public function totalItems()
     {
-        $total = 0;
+        $count = 0;
 
         foreach ( $this->all() as $item )
         {
-            $total += $item->qty;
+            $count += $item->qty;
         }
 
-        return $total;
+        return $count;
     }
 
     /**
@@ -197,6 +198,16 @@ class Cart
             if ( ! array_key_exists($param, $data) )
                 throw new InvalidNumberOfValuesException("{ $param } param is missing");
         }
+    }
+
+    /**
+     * @param $data
+     * @param $identifier
+     */
+    private function updateQty($data, $identifier)
+    {
+        $existing = $this->find($identifier);
+        $existing->qty += $data['qty'];
     }
 }
 
