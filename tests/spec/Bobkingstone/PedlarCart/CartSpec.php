@@ -132,11 +132,11 @@ class CartSpec extends ObjectBehavior
     {
         $storage->getAll()->willReturn([$item1,$item2]);
 
-        $item1->total(20)->willReturn(2.50);
+        $item1->total()->willReturn(2.00);
 
-        $item2->total(20)->willReturn(10.50);
+        $item2->total()->willReturn(10.00);
 
-        $this->totalWithTax(20)->shouldReturn(13.00);
+        $this->totalWithTax(20)->shouldReturn(14.40);
 
     }
 }
