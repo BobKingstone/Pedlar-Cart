@@ -1,7 +1,7 @@
 Pedlar-Cart Laravel Package
 ===============
 
-[![Build Status](https://travis-ci.org/BobKingstone/Pedlar-Cart.svg?branch=master)](https://travis-ci.org/BobKingstone/Pedlar-Cart)
+[![Build Status](https://travis-ci.org/BobKingstone/Pedlar-Cart.svg?branch=master)](https://travis-ci.org/BobKingstone/Pedlar-Cart)[![Latest Stable Version](https://poser.pugx.org/bobkingstone/pedlar-cart/v/stable.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![Total Downloads](https://poser.pugx.org/bobkingstone/pedlar-cart/downloads.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![Latest Unstable Version](https://poser.pugx.org/bobkingstone/pedlar-cart/v/unstable.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![License](https://poser.pugx.org/bobkingstone/pedlar-cart/license.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart)
 
 Laravel e-commerce shopping cart package.
 
