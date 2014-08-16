@@ -8,6 +8,21 @@ use Prophecy\Argument;
 class CartItemSpec extends ObjectBehavior
 {
 
+
+    /**
+     * Used for testing items with tax defined
+     *
+     * @var array
+     */
+    private $itemWithTax = [
+        'identifier' => '12',
+        'id' => '1',
+        'name' => 'foo',
+        'tax' => 20,
+        'qty' => 1,
+        'price' => 3.00
+    ];
+
     /**
      * used instead of let as tests for
      * error on creation are included
@@ -85,5 +100,19 @@ class CartItemSpec extends ObjectBehavior
 
         $this->shouldThrow('Bobkingstone\PedlarCart\Exceptions\InvalidItemKeyException')
             ->duringUpdate('foo', 'bar');
+    }
+
+    function it_should_calculate_item_total_with_preset_tax()
+    {
+        $this->beConstructedWith($this->itemWithTax);
+
+        $this->totalWithTax()->shouldReturn(3.60);
+    }
+
+    function it_should_calculate_item_tax_with_defined_tax_rate()
+    {
+        $this->thisConstructorWithDefaultItem();
+
+        $this->total(20)->shouldReturn(3.60);
     }
 }

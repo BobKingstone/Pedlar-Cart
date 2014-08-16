@@ -85,7 +85,7 @@ class CartSpec extends ObjectBehavior
 
         $storage->getAll()->willReturn([$item1,$item2]);
 
-        $this->total()->shouldReturn(800.10);
+        $this->totalValue()->shouldReturn(800.10);
     }
 
     function it_should_clear_cart_of_all_items(SessionStorage $storage, CartItem $item1, CartItem $item2)
@@ -114,5 +114,29 @@ class CartSpec extends ObjectBehavior
     {
         $this->shouldThrow('Bobkingstone\PedlarCart\Exceptions\InvalidNumberOfValuesException')
             ->duringInsert($this->cartItemLessQty);
+    }
+
+    function it_should_calculate_total_cart_value_with_item_tax_rate(SessionStorage $storage, CartItem $item1, CartItem $item2)
+    {
+        $storage->getAll()->willReturn([$item1,$item2]);
+
+        $item1->totalWithTax()->willReturn(2.20);
+
+        $item2->totalWithTax()->willReturn(10.50);
+
+        $this->totalWithTax()->shouldReturn(12.70);
+
+    }
+
+    function it_should_calculate_total_cart_value_with_defined_tax_rate(SessionStorage $storage, CartItem $item1, CartItem $item2)
+    {
+        $storage->getAll()->willReturn([$item1,$item2]);
+
+        $item1->total(20)->willReturn(2.50);
+
+        $item2->total(20)->willReturn(10.50);
+
+        $this->totalWithTax(20)->shouldReturn(13.00);
+
     }
 }

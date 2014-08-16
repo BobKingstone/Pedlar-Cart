@@ -19,18 +19,8 @@ class PedlarCartServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-//        $that = $this;
-//
-//        $this->app->singleton('cart', function() use ($that) {
-//            return new Cart($that->getStorageService(), $that->getIdentifierService());
-//        });
-
-//        $this->app->singleton['cart'] = $this->app->share(function($app)
-//        {
-//            return new Cart(new SessionStorage());
-//        });
-
-        $this->app->singleton('cart', function() {
+        $this->app->singleton('cart', function()
+        {
            return new Cart(new SessionStorage());
         });
 
@@ -39,7 +29,6 @@ class PedlarCartServiceProvider extends ServiceProvider {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('Cart', 'Bobkingstone\PedlarCart\Facades\Cart');
         });
-
 	}
 
 	/**

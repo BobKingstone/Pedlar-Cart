@@ -6,7 +6,7 @@ use Session;
  * Class SessionStorage
  * @package Bobkingstone\PedlarCart\Storage
  */
-class SessionStorage {
+class SessionStorage implements StorageInterface{
 
     /**
      * @param $item

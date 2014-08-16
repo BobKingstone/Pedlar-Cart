@@ -1,8 +1,8 @@
-<?php
+<?php namespace Bobkingstone\PedlarCart;
 
-namespace Bobkingstone\PedlarCart;
+
 use Bobkingstone\PedlarCart\Exceptions\InvalidNumberOfValuesException;
-use Bobkingstone\PedlarCart\Storage\SessionStorage;
+use Bobkingstone\PedlarCart\Storage\StorageInterface;
 
 /**
  * Class Cart
@@ -11,22 +11,11 @@ use Bobkingstone\PedlarCart\Storage\SessionStorage;
 class Cart
 {
 
-    /**
-     * @var
-     */
-    private $id;
 
     /**
-     * @var Storage\SessionStorage
+     * @var Storage\StorageInterface
      */
     private $storage;
-
-    /**
-     * Cart Items
-     *
-     * @var array
-     */
-    private $cart = array();
 
     /**
      * Array of params to remove from item identifier generator
@@ -46,10 +35,11 @@ class Cart
         'price'
     );
 
+
     /**
-     * @param SessionStorage $storage
+     * @param StorageInterface $storage
      */
-    function __construct(SessionStorage $storage)
+    function __construct(StorageInterface $storage)
     {
         $this->storage = $storage;
     }
@@ -131,13 +121,33 @@ class Cart
      *
      * @return int
      */
-    public function total()
+    public function totalValue()
     {
         $total = 0;
 
         foreach ( $this->all() as $item )
         {
             $total += $item->total();
+        }
+
+        return $total;
+    }
+
+    /**
+     * @param null $tax
+     * @return float|int|mixed
+     */
+    public function totalWithTax($tax = null)
+    {
+        $total = 0;
+
+        if ( ! $tax )
+        {
+            $total = $this->itemsWithTax($total);
+        }
+        else
+        {
+            $total = $this->totalWithDefinedTax($tax);
         }
 
         return $total;
@@ -168,7 +178,7 @@ class Cart
     /**
      * @return int
      */
-    public function TotalUnqiueItems()
+    public function totalUnqiueItems()
     {
         return count($this->all());
     }
@@ -176,7 +186,7 @@ class Cart
     /**
      * @return int
      */
-    public function totalItems()
+    public function itemCount()
     {
         $count = 0;
 
@@ -209,5 +219,27 @@ class Cart
         $existing = $this->find($identifier);
         $existing->qty += $data['qty'];
     }
-}
 
+    /**
+     * @param $total
+     * @return mixed
+     */
+    private function itemsWithTax($total)
+    {
+        foreach ($this->all() as $item) {
+            $total += $item->totalWithTax();
+        }
+        return $total;
+    }
+
+    /**
+     * @param $tax
+     * @return float|int
+     */
+    private function totalWithDefinedTax($tax)
+    {
+        $total = $this->totalValue();
+        $total += (($total / 100) * $tax);
+        return $total;
+    }
+}

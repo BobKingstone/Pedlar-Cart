@@ -88,4 +88,11 @@ class CartItem
 
         return ( ($price/100) * $taxRate) + $price;
     }
+
+    public function totalWithTax()
+    {
+        $taxRate = $this->tax;
+
+        return $this->total($taxRate);
+    }
 }
