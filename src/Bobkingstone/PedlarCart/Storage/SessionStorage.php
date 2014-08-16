@@ -8,6 +8,8 @@ use Session;
  */
 class SessionStorage implements StorageInterface{
 
+    protected $cart;
+
     /**
      * @param $item
      */
@@ -43,6 +45,10 @@ class SessionStorage implements StorageInterface{
         return false;
     }
 
+    /**
+     * @param $ident
+     * @return null
+     */
     function find($ident)
     {
         $cart = $this->getCart();
@@ -65,6 +71,9 @@ class SessionStorage implements StorageInterface{
         Session::forget('cart');
     }
 
+    /**
+     * @return array
+     */
     private function getCart()
     {
         if (Session::has('cart'))
@@ -78,4 +87,26 @@ class SessionStorage implements StorageInterface{
 
     }
 
-} 
+    /**
+     * remove cart item
+     *
+     * @param $ident
+     * @return mixed
+     */
+    function remove($ident)
+    {
+       $cart = $this->getCart();
+
+        $this->flush();
+
+        foreach ($cart as $position => $item) {
+            if ($ident === $item->identifier) {
+
+                unset($cart[$position]);
+            }
+        }
+
+
+        Session::put('cart',$cart);
+    }
+}

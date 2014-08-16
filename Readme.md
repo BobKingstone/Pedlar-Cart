@@ -3,7 +3,7 @@ Pedlar-Cart Laravel Package
 
 [![Build Status](https://travis-ci.org/BobKingstone/Pedlar-Cart.svg?branch=master)](https://travis-ci.org/BobKingstone/Pedlar-Cart)[![Latest Stable Version](https://poser.pugx.org/bobkingstone/pedlar-cart/v/stable.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![Total Downloads](https://poser.pugx.org/bobkingstone/pedlar-cart/downloads.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![Latest Unstable Version](https://poser.pugx.org/bobkingstone/pedlar-cart/v/unstable.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart) [![License](https://poser.pugx.org/bobkingstone/pedlar-cart/license.svg)](https://packagist.org/packages/bobkingstone/pedlar-cart)
 
-Laravel e-commerce shopping cart package.
+Laravel e-commerce shopping cart package. It uses Laravel's Session class by default.
 
 Installation
 -----------
@@ -82,6 +82,28 @@ Or pass in the percentage with the cart total calculation (this will override ea
 
     Cart::totalWithTax(20);
 
+To update an item
+
+    $item = Cart::find('91936a0df88d531b5a770b614cd3c1ea');
+
+    $item->update('qty','3');
+
+This will replace the existing value, to add to the quantity add the same item:
+
+    $item = array(
+            'id => '1',
+            'qty' => 2,
+            'price' => 200.00,
+        );
+
+    Cart::add($item);
+
+The item quantity will automatically be added.
+
+To remove a single item from cart:
+
+    Cart::remove('91936a0df88d531b5a770b614cd3c1ea');
+
 
 Exceptions
 ---
@@ -95,3 +117,8 @@ The package will throw InvalidNumberOfValuesException if one of the following re
     );
 
 It will also throw InvalidItemKeyException if an invalid update is passed to a cart item.
+
+Notes
+---
+
+Using dd() to view cart contents will interrupt Laravels Session storage functions and can prevent the cart from being updated.

@@ -29,4 +29,12 @@ interface StorageInterface {
      *Clear cart
      */
     function flush();
+
+    /**
+     * remove cart item
+     *
+     * @param $ident
+     * @return mixed
+     */
+    function remove ($ident);
 } 

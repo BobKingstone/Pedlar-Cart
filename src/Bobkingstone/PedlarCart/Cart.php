@@ -198,6 +198,11 @@ class Cart
         return $count;
     }
 
+    public function remove ($ident)
+    {
+        $this->storage->remove($ident);
+    }
+
     /**
      * @param $data
      * @throws Exceptions\InvalidNumberOfValuesException
