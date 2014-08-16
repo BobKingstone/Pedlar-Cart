@@ -8,10 +8,10 @@ Laravel e-commerce shopping cart package.
 Installation
 -----------
 
-Add bobkingstone/pedlarcart to your composer.json
+Add bobkingstone/pedlar-cart to your composer.json
 
     "require": {
-        "bobkingstone/pedlarcart": "dev-master"
+        "bobkingstone/pedlar-cart": "dev-master"
     }
 
 Run composer update
@@ -31,16 +31,29 @@ The package generates a 'Cart' facade for the package automatically so there is 
 To add an item to the cart:
 
     $item = array(
-        'id => '1',
+        'id => '1', //your cart id
         'qty' => 2,
         'price' => 200.00,
     );
 
-    Cart::add($item);
+    $CartItemIdentifier = Cart::add($item);
 
 To get the total number of all items in cart:
 
     Cart::countItems();
+
+To get an array of CartItems from cart:
+
+    Cart::all();
+
+To access cart items values:
+
+    foreach (Cart::all() as $item)
+    {
+        echo $item->id;
+        echo $item->price;
+        echo $item->qty;
+    };
 
 To get the total value of all items in cart:
 
@@ -54,6 +67,31 @@ To empty the cart:
 
     Cart::clear();
 
+To set tax rate, you can either add it to each item:
+
+    $item = array(
+        'id => '1',
+        'qty' => 2,
+        'tax' => 20,
+        'price' => 200.00,
+    );
+
+    Cart::totalWithTax();
+
+Or pass in the percentage with the cart total calculation (this will override each items predefined tax rate):
+
+    Cart::totalWithTax(20);
+
 
 Exceptions
 ---
+
+The package will throw InvalidNumberOfValuesException if one of the following required params is missing:
+
+    $requiredParams = array (
+        'id',
+        'qty',
+        'price'
+    );
+
+It will also throw InvalidItemKeyException if an invalid update is passed to a cart item.

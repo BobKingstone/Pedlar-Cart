@@ -76,6 +76,8 @@ class CartItem
     }
 
     /**
+     * returns item total value
+     *
      * @param null $taxRate
      * @return float|null
      */
@@ -83,12 +85,17 @@ class CartItem
     {
         $price = $this->price;
 
-        if ( ! $taxRate )
-            return $this->qty * $price;
+        if ( $taxRate )
+            return ( ($price/100) * $taxRate) + $price;
 
-        return ( ($price/100) * $taxRate) + $price;
+        return $this->qty * $price;
     }
 
+    /**
+     * return item value with tax
+     *
+     * @return float|null
+     */
     public function totalWithTax()
     {
         $taxRate = $this->tax;
