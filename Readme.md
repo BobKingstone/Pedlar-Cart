@@ -36,7 +36,7 @@ To add an item to the cart:
         'price' => 200.00,
     );
 
-    $CartItemIdentifier = Cart::add($item);
+    $CartItemIdentifier = Cart::insert($item);
 
 To get the total number of all items in cart:
 
@@ -96,7 +96,7 @@ This will replace the existing value, to add to the quantity add the same item:
             'price' => 200.00,
         );
 
-    Cart::add($item);
+    Cart::insert($item);
 
 The item quantity will automatically be added.
 
